@@ -151,7 +151,7 @@ class catalogoDocumentos(models.Model):
         db_table = 'catalogoDocumentos'
     def __str__(self):
         return f'{self.idCatalogoDocumentos}'
-        
+#Cliente        
 class cliente(models.Model):
     idCliente = models.AutoField(primary_key=True)
     primerNombre = models.CharField(max_length=45)
