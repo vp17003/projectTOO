@@ -17,18 +17,6 @@ class ejecutivo(models.Model):
         return f'{self.idEjecutivo}'
 
 # Create your models here.
-#Tabla asociacion
-class asociacion(models.Model):
-    idAsociado = models.AutoField(primary_key=True)
-    fechaAsociacion = models.CharField(max_length=50)
-    lugarAsociacion = models.CharField(max_length=100)
-    ejecutivo_idEjecutivo= models.ForeignKey(ejecutivo, on_delete=models.CASCADE)
-
-    class Meta:
-        managed = True
-        db_table = 'asociacion'
-    def __str__(self):
-        return f'{self.idAsociado}'
 class asociacion(models.Model):
     idAsociado = models.AutoField(primary_key=True)
     fechaAsociacion = models.CharField(max_length=50)
@@ -220,8 +208,6 @@ class catalogoReferencias(models.Model):
     asociaciones = models.CharField(max_length=120)
     cliente_idCliente1 = models.ForeignKey(cliente, on_delete=models.CASCADE)
     referencias_idReferenciaCliente = models.ForeignKey(referencias, on_delete=models.CASCADE)
-    #En esta relacion tengo rudas si es con referencias o con cliente la relacion
-    #referencias_cliente_idCliente3 = models.ForeignKey(cliente, on_delete=models.CASCADE)
 
     class Meta:
         managed = True

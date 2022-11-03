@@ -1,0 +1,49 @@
+{% load static %}
+{% block links %}
+<!-- Bootstrap select CSS -->
+<link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap-select.min.css' %}">
+<!-- Custom CSS -->
+<link type="text/css" rel="stylesheet" href="{% static 'css/custom.css' %}">
+{% endblock %}
+{% block content %}
+<title>Ejecutivo</title>
+<style type="text/css">
+  .Fecha{width:200px;}
+</style>
+  <aside class="asideDer">
+    <h1 class="d-flex justify-content-center">Ejecutivos</h1>
+  </aside>
+  <br>
+  <br>
+  <div class="container">
+      <div class="row">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th scope="col">Nombres</th>
+            <th scope="col">Apellidos </th>
+            <th scope="col"> <a class="btn btn-info" href="{%url 'registrarEjecutivo'%}">Agregar</a></th>
+          </tr>
+        </thead>  
+          <tbody>
+          {%if ejecutivos%}
+            {% for ejecutivo in ejecutivos%}
+            <tr>
+            <td>{{ejecutivo.nombreEjecutivo}}</td>
+            <td>{{ejecutivo.apellidoEjecutivo}}</td>
+            <td>
+            <a href="{%url 'updateEjecutivo' ejecutivo.idEjecutivo%}" class="btn btn-outline-warning"><i class="material-icons">edit</i></a>
+            </td>
+            </tr>
+            
+            {% endfor %}
+          
+          {% endif%}
+
+          </tbody>
+        </table>
+      </div>
+  </div>
+
+   
+{% endblock %}
