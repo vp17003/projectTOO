@@ -187,7 +187,7 @@ class catalogoBeneficiario(models.Model):
     idCatalogoBeneficiario = models.AutoField(primary_key=True)
     porcentajeBeneficiario = models.IntegerField()
     beneficiario_idBeneficiario= models.ForeignKey(beneficiario, on_delete=models.CASCADE)
-    cliente_idCliente = models.ForeignKey(cliente, on_delete=models.CASCADE)
+    cliente_idCliente2 = models.ForeignKey(cliente, on_delete=models.CASCADE)
 
     class Meta:
         managed = True
@@ -201,7 +201,7 @@ class referencias(models.Model):
     nombreReferencia = models.CharField(max_length=100)
     telReferencia = models.CharField(max_length=20)
     correoReferencia = models.CharField(max_length=100)
-    cliente_idCliente = models.ForeignKey(cliente, on_delete=models.CASCADE)
+    cliente_idCliente3 = models.ForeignKey(cliente, on_delete=models.CASCADE)
 
     class Meta:
         managed = True
@@ -218,10 +218,10 @@ class catalogoReferencias(models.Model):
     )
     parenscoBeneficiario = models.CharField(max_length=2, choices=TIPOREFERENCIA)
     asociaciones = models.CharField(max_length=120)
-    cliente_idCliente = models.ForeignKey(cliente, on_delete=models.CASCADE)
+    cliente_idCliente1 = models.ForeignKey(cliente, on_delete=models.CASCADE)
     referencias_idReferenciaCliente = models.ForeignKey(referencias, on_delete=models.CASCADE)
     #En esta relacion tengo rudas si es con referencias o con cliente la relacion
-    referencias_cliente_idCliente = models.ForeignKey(referencias, on_delete=models.CASCADE)
+    #referencias_cliente_idCliente3 = models.ForeignKey(cliente, on_delete=models.CASCADE)
 
     class Meta:
         managed = True
