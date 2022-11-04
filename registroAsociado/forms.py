@@ -57,7 +57,7 @@ class clienteForm(forms.ModelForm):
 
 class beneficiariosForm(forms.ModelForm):
     class Meta:
-        model = beneficiario, catalogoBeneficiario
+        model = beneficiario
         fields = '__all__'
         labels = {
             'nombreBeneficiario': 'Nombres:',
