@@ -35,3 +35,44 @@ def UpdateEjecutivo(request, ejecutivoID):
 			form.save()			
 		return redirect('verEjecutivo')
 	return render(request, 'ejecutivos/registrarEjecutivo.html', {'form':form})
+
+
+def crearCliente(request):	
+	if request.method == 'GET':
+		form = clienteForm()
+	else:
+		form = clienteForm(request.POST)
+		if form.is_valid():			
+			form.save()
+		return redirect('registrarCliente')
+	return render(request, 'clientes/registrarCliente.html', {'form':form})
+
+def ListCliente(request):
+	if request.method =='GET':
+		clientes= cliente.objects.all().order_by('-idCliente')	
+		contexto={'clientes':clientes}
+	else:
+		return redirect('verCliente')
+	return render(request, 'clientes/verCliente.html', contexto)
+	
+def UpdateCliente(request, idClientes):
+	clientes = cliente.objects.get(idCliente = idClientes)
+	if request.method == 'GET':
+		form = clienteForm(instance=clientes)
+	else:
+		form = clienteForm(request.POST, instance=clientes)
+		if form.is_valid():
+			form.save()			
+		return redirect('verCliente')
+	return render(request, 'clientes/registrarCliente.html', {'form':form})
+
+def crearBeneficiario(request):	
+	if request.method == 'GET':
+		form = beneficiariosForm()
+	else:
+		form = clienteForm(request.POST)
+		if form.is_valid():			
+			form.save()
+		return redirect('registrarCliente')
+	return render(request, 'clientes/registrarCliente.html', {'form':form})
+

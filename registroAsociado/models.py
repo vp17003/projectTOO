@@ -4,6 +4,46 @@ from django.db import models
 
 # Create your models here.
 
+class genero(models.Model):
+    idGenero = models.AutoField(primary_key=True)
+    # Por sno funciona lo de abajo esta la linea 36
+    # nombreGenero = models.CharField(max_length=8, unique=True)
+    nombreGenero = models.CharField(max_length=10)
+        
+    class Meta:
+        managed = True
+        db_table = 'genero'
+    def __str__(self):
+        return f'{self.nombreGenero}'
+
+
+class cliente(models.Model):
+    idCliente = models.AutoField(primary_key=True)
+    primerNombre = models.CharField(max_length=45)
+    segundoNombre = models.CharField(max_length=45)
+    primerApellido = models.CharField(max_length=45)
+    segundoApellido= models.CharField(max_length=45)
+    apellidoCasada = models.CharField(max_length=45, blank=True, null=True)
+    fechaNacimiento = models.CharField(max_length=11)
+    nacionalidad = models.CharField(max_length=45)
+    paisNacimiento = models.CharField(max_length=45)
+    ubicacion = models.CharField(max_length=100)
+    subRegion = models.CharField(max_length=50)
+    ESTADOCIVIL= (
+        ('1', 'CASADO'),
+        ('2', 'DIVORCIADO'),
+        ('3','VIUDO'),
+        ('4','SOLTERO'),
+    )
+    estadoCivil = models.CharField(max_length=2, choices=ESTADOCIVIL)
+    genero_idGenero = models.ForeignKey(genero, on_delete=models.CASCADE)    
+    class Meta:
+        managed = True
+        db_table = 'cliente'
+    def __str__(self):
+        return f'{self. idCliente}'
+
+
 # Tabla ejecutico
 class ejecutivo(models.Model):
     idEjecutivo = models.AutoField(primary_key=True)
@@ -21,6 +61,7 @@ class asociacion(models.Model):
     idAsociado = models.AutoField(primary_key=True)
     fechaAsociacion = models.CharField(max_length=50)
     lugarAsociacion = models.CharField(max_length=100)
+    cliente_idCliente = models.ForeignKey(cliente, null=True, on_delete= models.CASCADE)
     ejecutivo_idEjecutivo= models.ForeignKey(ejecutivo, on_delete=models.CASCADE)
 
     class Meta:
@@ -29,36 +70,12 @@ class asociacion(models.Model):
     def __str__(self):
         return f'{self.idAsociado}'
 
-#Tabla genero
-class genero(models.Model):
-    idGenero = models.AutoField(primary_key=True)
-    # Por sno funciona lo de abajo esta la linea 36
-    # nombreGenero = models.CharField(max_length=8, unique=True)
-    GENERO = (
-        ('H', 'HOMBRE'),
-        ('M', 'MUJER'),
-    )
-    nombreGenero = models.CharField(max_length=1, choices=GENERO)
-        
-    class Meta:
-        managed = True
-        db_table = 'genero'
-    def __str__(self):
-        return f'{self.idGenero}'
-
 # Tabla tipo documento
 class tipoDocumento(models.Model):
     idTipoDocumento = models.AutoField(primary_key=True)
     # Por sno funciona lo de abajo esta la linea 52
     # nombreDocumento = models.CharField(max_length=10, unique=True)
-    DOCUMENTO = (
-        ('DUI', 'DUI'),
-        ('NIT', 'NIT'),
-        ('PARTI','PARTIDA DE NACIMIENTO'),
-        ('PASAP','PASAPORTE'),
-        ('CARNE','CARNE DE RESIDENCIA'),
-    )
-    nombreDocumento = models.CharField(max_length=6, choices=DOCUMENTO, default='DUI')
+    nombreDocumento = models.CharField(max_length=50)
         
     class Meta:
         managed = True
@@ -116,22 +133,23 @@ class beneficiario(models.Model):
         return f'{self.idBeneficiario}'
 
 #Catalogo actividad economica
-class catalogoActiEconomica(models.Model):
-    idcatalogoActiEconomica = models.AutoField(primary_key=True)
+class trabajo(models.Model):
+    idTrabajo = models.AutoField(primary_key=True)
     capacidadPago = models.CharField(max_length=150)
-
+    cliente_idCliente = models.ForeignKey(cliente, on_delete=models.CASCADE)
     catalogoProfesiones_idcatalogoProfesiones = models.ForeignKey(catalogoProfesiones, on_delete=models.CASCADE)
     tipoActEconomica_idTipoActEconomica = models.ForeignKey(tipoActEconomica, on_delete=models.CASCADE)
 
     class Meta:
         managed = True
-        db_table = 'catalogoActiEconomica'
+        db_table = 'trabajo'
     def __str__(self):
-        return f'{self.idcatalogoActiEconomica}'
+        return f'{self.idTrabajo}'
 #Catalogo documentos
 class catalogoDocumentos(models.Model):
     idCatalogoDocumentos = models.AutoField(primary_key=True)
     nunDocumento = models.CharField(max_length=50)
+    cliente_idCliente = models.ForeignKey(cliente, null=True, on_delete=models.CASCADE)
     tipoDocumento_idTipoDocumento = models.ForeignKey(tipoDocumento, on_delete=models.CASCADE)
 
     class Meta:
@@ -140,35 +158,7 @@ class catalogoDocumentos(models.Model):
     def __str__(self):
         return f'{self.idCatalogoDocumentos}'
 #Cliente        
-class cliente(models.Model):
-    idCliente = models.AutoField(primary_key=True)
-    primerNombre = models.CharField(max_length=45)
-    segundoNombre = models.CharField(max_length=45)
-    primerApellido = models.CharField(max_length=45)
-    segundoApellido= models.CharField(max_length=45)
-    apellidoCasada = models.CharField(max_length=45)
-    fechaNacimiento = models.CharField(max_length=11)
-    nacionalidad = models.CharField(max_length=45)
-    paisNacimiento = models.CharField(max_length=45)
-    ubicacion = models.CharField(max_length=100)
-    subRegion = models.CharField(max_length=50)
-    ESTADOCIVIL= (
-        ('1', 'CASADO'),
-        ('2', 'DIVORCIADO'),
-        ('3','VIUDO'),
-        ('4','SOLTERO'),
-    )
-    estadoCivil = models.CharField(max_length=2, choices=ESTADOCIVIL)
-    asociacion_idAsociado = models.ForeignKey(asociacion, on_delete=models.CASCADE)
-    catalogoDocumentos_idCatalogoDocumento = models.ForeignKey(catalogoDocumentos, on_delete=models.CASCADE)
-    genero_idGenero = models.ForeignKey(genero, on_delete=models.CASCADE)
-    catalogoActiEconomica_idCatalogoActiEconomica = models.ForeignKey(catalogoActiEconomica, on_delete=models.CASCADE)
-    
-    class Meta:
-        managed = True
-        db_table = 'cliente'
-    def __str__(self):
-        return f'{self. idCliente}'
+
 
 #Catalogo beneficiarios
 class catalogoBeneficiario(models.Model):

@@ -7,6 +7,12 @@ urlpatterns = [
 	path('modificar/<int:ejecutivoID>', UpdateEjecutivo, name="updateEjecutivo"),
 	# path('transaccion/agregar', CreateTransaccion, name="registrarTransaccion"),	
 
+	path('cliente', ListCliente, name="verCliente"),
+	path('clienteAgregar', crearCliente, name="registrarCliente"),	
+	path('modificar/<int:idCliente>', UpdateCliente, name="updateCliente"),
+
+	path('beneficiario', crearBeneficiario, name="crearBeneficiario"),
+
     
 ]
 
