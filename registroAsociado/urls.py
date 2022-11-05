@@ -11,7 +11,7 @@ urlpatterns = [
 	path('clienteAgregar', crearCliente, name="registrarCliente"),	
 	path('modificar/<int:idCliente>', UpdateCliente, name="updateCliente"),
 
-	path('beneficiario', crearBeneficiario, name="crearBeneficiario"),
+	path('registrarBeneficiarios/<int:idCliente>', crearBeneficiario, name="crearBeneficiario"),
 
     
 ]

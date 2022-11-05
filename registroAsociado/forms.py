@@ -58,33 +58,20 @@ class clienteForm(forms.ModelForm):
 class beneficiariosForm(forms.ModelForm):
     class Meta:
         model = beneficiario
-        fields = '__all__'
+        fields = ['nombreBeneficiario', 'apellidoBeneficiario', 'telBeneficiario', 'edadBeneficiario', 'parenscoBeneficiario', 'porcentajeBeneficiario']
         labels = {
             'nombreBeneficiario': 'Nombres:',
             'apellidoBeneficiario': 'Apellidos:',
             'telBeneficiario': 'Telefono:',
             'edadBeneficiario': 'Edad:',
             'parenscoBeneficiario': 'Parentesco:',
+            'porcentajeBeneficiario': 'Porcentaje'
         }
         widgets = {
           'nombreBeneficiario': forms.TextInput(attrs={'class': 'form-control'}),
           'apellidoBeneficiario': forms.TextInput(attrs={'class': 'form-control'}),
           'telBeneficiario': forms.TextInput(attrs={'class': 'form-control'}),
           'edadBeneficiario': forms.TextInput(attrs={'class': 'form-control'}),
-          'parenscoBeneficiario': forms.Select(attrs={'class': 'form-control'})
-        }
-
-class catalogoBeneficiarioForm(forms.ModelForm):
-    class Meta:
-        model = catalogoBeneficiario
-        fields = '__all__'
-        labels = {
-            'porcentajeBeneficiario': 'Nombres:',
-            'beneficiario_idBeneficiario': 'Apellidos:',
-            'cliente_idCliente2': 'Telefono:',
-        }
-        widgets = {
-          'porcentajeBeneficiario': forms.TextInput(attrs={'class': 'form-control'}),
-          'beneficiario_idBeneficiario': forms.Select(attrs={'class': 'form-control'}),
-          'cliente_idCliente2': forms.Select(attrs={'class': 'form-control'})
+          'parenscoBeneficiario': forms.Select(attrs={'class': 'form-control'}),
+          'porcentajeBeneficiario': forms.TextInput(attrs={'class': 'form-control'})
         }

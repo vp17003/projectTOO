@@ -6,10 +6,7 @@ from django.db import models
 
 class genero(models.Model):
     idGenero = models.AutoField(primary_key=True)
-    # Por sno funciona lo de abajo esta la linea 36
-    # nombreGenero = models.CharField(max_length=8, unique=True)
     nombreGenero = models.CharField(max_length=10)
-        
     class Meta:
         managed = True
         db_table = 'genero'
@@ -63,7 +60,6 @@ class asociacion(models.Model):
     lugarAsociacion = models.CharField(max_length=100)
     cliente_idCliente = models.ForeignKey(cliente, null=True, on_delete= models.CASCADE)
     ejecutivo_idEjecutivo= models.ForeignKey(ejecutivo, on_delete=models.CASCADE)
-
     class Meta:
         managed = True
         db_table = 'asociacion'
@@ -73,10 +69,7 @@ class asociacion(models.Model):
 # Tabla tipo documento
 class tipoDocumento(models.Model):
     idTipoDocumento = models.AutoField(primary_key=True)
-    # Por sno funciona lo de abajo esta la linea 52
-    # nombreDocumento = models.CharField(max_length=10, unique=True)
     nombreDocumento = models.CharField(max_length=50)
-        
     class Meta:
         managed = True
         db_table = 'tipoDocumento'
@@ -125,7 +118,8 @@ class beneficiario(models.Model):
         ('9','PRIMA/O'),
     )
     parenscoBeneficiario = models.CharField(max_length=2, choices=PARENTESCO)
-    
+    porcentajeBeneficiario = models.CharField(max_length=20, null=True)
+    clienteBeneficiario = models.ForeignKey(cliente, null=True, on_delete=models.CASCADE)
     class Meta:
         managed = True
         db_table = 'beneficiario'
@@ -136,7 +130,7 @@ class beneficiario(models.Model):
 class trabajo(models.Model):
     idTrabajo = models.AutoField(primary_key=True)
     capacidadPago = models.CharField(max_length=150)
-    cliente_idCliente = models.ForeignKey(cliente, on_delete=models.CASCADE)
+    cliente_idCliente = models.ForeignKey(cliente, null=True, on_delete=models.CASCADE)
     catalogoProfesiones_idcatalogoProfesiones = models.ForeignKey(catalogoProfesiones, on_delete=models.CASCADE)
     tipoActEconomica_idTipoActEconomica = models.ForeignKey(tipoActEconomica, on_delete=models.CASCADE)
 
@@ -148,7 +142,7 @@ class trabajo(models.Model):
 #Catalogo documentos
 class catalogoDocumentos(models.Model):
     idCatalogoDocumentos = models.AutoField(primary_key=True)
-    nunDocumento = models.CharField(max_length=50)
+    numDocumento = models.CharField(max_length=50)
     cliente_idCliente = models.ForeignKey(cliente, null=True, on_delete=models.CASCADE)
     tipoDocumento_idTipoDocumento = models.ForeignKey(tipoDocumento, on_delete=models.CASCADE)
 
@@ -157,21 +151,6 @@ class catalogoDocumentos(models.Model):
         db_table = 'catalogoDocumentos'
     def __str__(self):
         return f'{self.idCatalogoDocumentos}'
-#Cliente        
-
-
-#Catalogo beneficiarios
-class catalogoBeneficiario(models.Model):
-    idCatalogoBeneficiario = models.AutoField(primary_key=True)
-    porcentajeBeneficiario = models.IntegerField()
-    beneficiario_idBeneficiario= models.ForeignKey(beneficiario, on_delete=models.CASCADE)
-    cliente_idCliente2 = models.ForeignKey(cliente, on_delete=models.CASCADE)
-
-    class Meta:
-        managed = True
-        db_table = 'catalogoBeneficiario'
-    def __str__(self):
-        return f'{self.idCatalogoBeneficiario}'
 
 #Tabla referencias
 class referencias(models.Model):
@@ -179,28 +158,15 @@ class referencias(models.Model):
     nombreReferencia = models.CharField(max_length=100)
     telReferencia = models.CharField(max_length=20)
     correoReferencia = models.CharField(max_length=100)
-    cliente_idCliente3 = models.ForeignKey(cliente, on_delete=models.CASCADE)
+    TIPOREFERENCIA = (
+        ('1', 'PERSONAL'),
+        ('2', 'FAMILIAR'),
+    )
+    tipoReferencia = models.CharField(max_length=2, null=True, choices=TIPOREFERENCIA)
+    cliente_idCliente3 = models.ForeignKey(cliente, null=True, on_delete=models.CASCADE)
 
     class Meta:
         managed = True
         db_table = 'referencias'
     def __str__(self):
         return f'{self.idReferenciaCliente}'
-
-#Catalogo referencia
-class catalogoReferencias(models.Model):
-    idCatalogoReferencia = models.AutoField(primary_key=True)
-    TIPOREFERENCIA = (
-        ('1', 'PERSONAL'),
-        ('2', 'FAMILIAR'),
-    )
-    parenscoBeneficiario = models.CharField(max_length=2, choices=TIPOREFERENCIA)
-    asociaciones = models.CharField(max_length=120)
-    cliente_idCliente1 = models.ForeignKey(cliente, on_delete=models.CASCADE)
-    referencias_idReferenciaCliente = models.ForeignKey(referencias, on_delete=models.CASCADE)
-
-    class Meta:
-        managed = True
-        db_table = 'catalogoReferencias'
-    def __str__(self):
-        return f'{self.idCatalogoReferencia}'

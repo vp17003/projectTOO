@@ -43,7 +43,8 @@ def crearCliente(request):
 	else:
 		form = clienteForm(request.POST)
 		if form.is_valid():			
-			form.save()
+			client = form.save()
+			return redirect('crearBeneficiario',client.idCliente)
 		return redirect('registrarCliente')
 	return render(request, 'clientes/registrarCliente.html', {'form':form})
 
@@ -66,13 +67,16 @@ def UpdateCliente(request, idClientes):
 		return redirect('verCliente')
 	return render(request, 'clientes/registrarCliente.html', {'form':form})
 
-def crearBeneficiario(request):	
+
+def crearBeneficiario(request, idCliente):	
 	if request.method == 'GET':
 		form = beneficiariosForm()
 	else:
-		form = clienteForm(request.POST)
-		if form.is_valid():			
+		form = beneficiariosForm(request.POST)
+		if form.is_valid():		
+			obj3 = form.save(commit=False)
+			obj3.clienteBeneficiario = cliente.objects.get(pk=idCliente)
 			form.save()
-		return redirect('registrarCliente')
-	return render(request, 'clientes/registrarCliente.html', {'form':form})
+		return render(request, 'beneficiarios/registrarBeneficiario.html', {'form':form})
+	return render(request, 'beneficiarios/registrarBeneficiario.html', {'form':form})
 
