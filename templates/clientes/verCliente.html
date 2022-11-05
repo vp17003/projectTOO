@@ -1,0 +1,71 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block links %}
+<!-- Bootstrap select CSS -->
+<link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap-select.min.css' %}">
+<!-- Custom CSS -->
+<link type="text/css" rel="stylesheet" href="{% static 'css/custom.css' %}">
+{% endblock %}
+{% block content %}
+<title>Cliente</title>
+<style type="text/css">
+  .Fecha{width:200px;}
+</style>
+  <aside class="asideDer">
+    <h1 class="d-flex justify-content-center">Cliente</h1>
+  </aside>
+  <br>
+  <br>
+  <div class="container">
+      <div class="row">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th scope="col">Primer Nombre</th>
+            <th scope="col">Segundo Nombre </th>
+            <th scope="col">Primer Apellido </th>
+            <th scope="col">Segundo Apellido </th>
+            <th scope="col">Apellido casada </th>
+            <th scope="col">Fecha nacimiento  </th>
+            <th scope="col">Naiconalidad </th>
+            <th scope="col">Pais </th>
+            <th scope="col">Ubicacion </th>
+            <th scope="col">Subregion </th>
+            <th scope="col">Estado Civil </th>
+            <th scope="col">Genero </th>
+            <th scope="col"> <a class="btn btn-info" href="{%url 'registrarCliente'%}">Agregar</a></th>
+          </tr>
+        </thead>  
+          <tbody>
+          {%if clientes%}
+            {% for cliente in clientes%}
+            <tr>
+            <td>{{cliente.primerNombre}}</td>
+            <td>{{cliente.segundoNombre}}</td>
+            <td>{{cliente.primerApellido}}</td>
+            <td>{{cliente.segundoApellido}}</td>
+            <td>{{cliente.apellidoCasada}}</td>
+            <td>{{cliente.fechaNacimiento}}</td>
+            <td>{{cliente.nacionalidad}}</td>
+            <td>{{cliente.paisNacimiento}}</td>
+            <td>{{cliente.ubicacion}}</td>
+            <td>{{cliente.subRegion}}</td>
+            <td>{{cliente.estadoCivil}}</td>
+            <td>{{cliente.genero_idGenero}}</td>
+            <td>
+            <a href="{%url 'updateCliente' cliente.idCliente%}" class="btn btn-outline-warning"><i class="material-icons">edit</i></a>
+            <a href="{%url 'updateCliente' cliente.idCliente%}" class="btn btn-outline-warning"><i class="material-icons"></i>Beneficiarios</a>
+            </td>
+            </tr>
+            
+            {% endfor %}
+          
+          {% endif%}
+
+          </tbody>
+        </table>
+      </div>
+  </div>
+
+   
+{% endblock %}
